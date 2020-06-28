@@ -17,18 +17,42 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     //     age: '21',
     // }, (error, result) => {
     //     if (error) {
-    //         return log(chalk.red.bold.inverse('unable to insert user'));
+    //         return log(chalk.red.bold.inverse('unable to insert user(s)'));
     //     }
     //     log(result.ops);
     // });
-    db.collection('users').insertMany([
+    // db.collection('users').insertMany([
+    //     {
+    //         name: 'dodo',
+    //         age: '21',
+    //     },
+    //     {
+    //         name: 'pelican',
+    //         age: '16'
+    //     }
+    // ], (error, result) => {
+    //     if (error) {
+    //         return log(chalk.red.bold.inverse('unable to insert user(s)'));
+    //     }
+    //     log(result.ops);
+    // });
+    db.collection('tasks').insertMany([
         {
-            name: 'dodo',
-            age: '21',
+            description: 'install visual code',
+            completed: true,
         },
         {
-            name: 'pelican',
-            age: '16'
+            description: 'install nodejs',
+            completed: true,
+        },
+        {
+            description: 'install react',
+            completed: true,
+        },
+    ], (error, result) => {
+        if (error) {
+            return log(chalk.red.bold.inverse('unable to insert task(s)'));
         }
-    ]);
+        log(result.ops);
+    });
 });
