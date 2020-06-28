@@ -15,5 +15,10 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     db.collection('users').insertOne({
         name: 'Sai',
         age: '21',
+    }, (error, result) => {
+        if (error) {
+            return log(chalk.red.bold.inverse('unable to insert user'));
+        }
+        log(result.ops);
     });
 });
