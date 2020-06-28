@@ -12,13 +12,23 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     }
     // log(chalk.green.inverse.bold('connected!'));
     const db = client.db(databaseName);
-    db.collection('users').insertOne({
-        name: 'Sai',
-        age: '21',
-    }, (error, result) => {
-        if (error) {
-            return log(chalk.red.bold.inverse('unable to insert user'));
+    // db.collection('users').insertOne({
+    //     name: 'Sai',
+    //     age: '21',
+    // }, (error, result) => {
+    //     if (error) {
+    //         return log(chalk.red.bold.inverse('unable to insert user'));
+    //     }
+    //     log(result.ops);
+    // });
+    db.collection('users').insertMany([
+        {
+            name: 'dodo',
+            age: '21',
+        },
+        {
+            name: 'pelican',
+            age: '16'
         }
-        log(result.ops);
-    });
+    ]);
 });
