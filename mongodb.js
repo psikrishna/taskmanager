@@ -1,10 +1,16 @@
-const mongodb = require('mongodb');
-const MongoClient = mongodb.MongoClient;
+// const mongodb = require('mongodb');
+// const MongoClient = mongodb.MongoClient;
 const chalk = require('chalk');
 const log = console.log;
 
+const { MongoClient, ObjectID } = require('mongodb');
+
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const databaseName = 'task-manager';
+
+const id = new ObjectID();
+log(id);
+log(id.getTimestamp());
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
     if (error) {
@@ -36,23 +42,24 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     //     }
     //     log(result.ops);
     // });
-    db.collection('tasks').insertMany([
-        {
-            description: 'install visual code',
-            completed: true,
-        },
-        {
-            description: 'install nodejs',
-            completed: true,
-        },
-        {
-            description: 'install react',
-            completed: true,
-        },
-    ], (error, result) => {
-        if (error) {
-            return log(chalk.red.bold.inverse('unable to insert task(s)'));
-        }
-        log(result.ops);
-    });
+    // ==========
+    // db.collection('tasks').insertMany([
+    //     {
+    //         description: 'install visual code',
+    //         completed: true,
+    //     },
+    //     {
+    //         description: 'install nodejs',
+    //         completed: true,
+    //     },
+    //     {
+    //         description: 'install react',
+    //         completed: true,
+    //     },
+    // ], (error, result) => {
+    //     if (error) {
+    //         return log(chalk.red.bold.inverse('unable to insert task(s)'));
+    //     }
+    //     log(result.ops);
+    // });
 });
