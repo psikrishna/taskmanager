@@ -1,5 +1,4 @@
-// const mongodb = require('mongodb');
-// const MongoClient = mongodb.MongoClient;
+// CRUD => create read update delete
 const chalk = require('chalk');
 const log = console.log;
 
@@ -18,49 +17,11 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     }
     // log(chalk.green.inverse.bold('connected!'));
     const db = client.db(databaseName);
-    db.collection('users').insertOne({
-        _id: id,
-        name: 'psi',
-        age: '21',
-    }, (error, result) => {
+    db.collection('users').findOne({ name: 'Sai' }, (error, user) => {
         if (error) {
-            return log(chalk.red.bold.inverse('unable to insert user(s)'));
+            log(chalk.red.bold.inverse('unable to fetch user'));
         }
-        log(result.ops);
+        log(user);
     });
-    // db.collection('users').insertMany([
-    //     {
-    //         name: 'dodo',
-    //         age: '21',
-    //     },
-    //     {
-    //         name: 'pelican',
-    //         age: '16'
-    //     }
-    // ], (error, result) => {
-    //     if (error) {
-    //         return log(chalk.red.bold.inverse('unable to insert user(s)'));
-    //     }
-    //     log(result.ops);
-    // });
-    // ==========
-    // db.collection('tasks').insertMany([
-    //     {
-    //         description: 'install visual code',
-    //         completed: true,
-    //     },
-    //     {
-    //         description: 'install nodejs',
-    //         completed: true,
-    //     },
-    //     {
-    //         description: 'install react',
-    //         completed: true,
-    //     },
-    // ], (error, result) => {
-    //     if (error) {
-    //         return log(chalk.red.bold.inverse('unable to insert task(s)'));
-    //     }
-    //     log(result.ops);
-    // });
+    db.collection('users').find({ age: 21 });
 });
