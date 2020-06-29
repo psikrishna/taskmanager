@@ -18,15 +18,16 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     }
     // log(chalk.green.inverse.bold('connected!'));
     const db = client.db(databaseName);
-    // db.collection('users').insertOne({
-    //     name: 'Sai',
-    //     age: '21',
-    // }, (error, result) => {
-    //     if (error) {
-    //         return log(chalk.red.bold.inverse('unable to insert user(s)'));
-    //     }
-    //     log(result.ops);
-    // });
+    db.collection('users').insertOne({
+        _id: id,
+        name: 'psi',
+        age: '21',
+    }, (error, result) => {
+        if (error) {
+            return log(chalk.red.bold.inverse('unable to insert user(s)'));
+        }
+        log(result.ops);
+    });
     // db.collection('users').insertMany([
     //     {
     //         name: 'dodo',
