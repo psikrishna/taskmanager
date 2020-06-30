@@ -16,14 +16,10 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
         return log(chalk.red.bold.inverse('unable to connect to database'));
     }
     const db = client.db(databaseName);
-    db.collection('tasks').updateMany({
-        completed: false,
-    }, {
-        $set: {
-            completed: true,
-        }
+    db.collection('tasks').deleteOne({
+        description: 'install react',
     }).then((result) => {
-        log(result.modifiedCount);
+        log(result.deletedCount);
     }).catch((error) => {
         log(error);
     });
