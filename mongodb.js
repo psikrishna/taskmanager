@@ -16,17 +16,15 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
         return log(chalk.red.bold.inverse('unable to connect to database'));
     }
     const db = client.db(databaseName);
-
-    db.collection('users').updateOne({
-        _id: new ObjectID('5ef8bd32161e5c4f04cead13'),
+    db.collection('tasks').updateMany({
+        completed: false,
     }, {
-        $inc: {
-            age: -1,
+        $set: {
+            completed: true,
         }
     }).then((result) => {
-        log(result)
+        log(result.modifiedCount);
     }).catch((error) => {
-        // log(chalk.red.bold.inverse(error));
-        log(error)
+        log(error);
     });
 });
