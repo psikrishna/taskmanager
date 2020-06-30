@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "chalk": "^4.1.0",
-    "mongodb": "^3.5.9"
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.20"
   },
   "devDependencies": {},
   "scripts": {
