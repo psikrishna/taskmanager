@@ -15,15 +15,18 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     if (error) {
         return log(chalk.red.bold.inverse('unable to connect to database'));
     }
-    // log(chalk.green.inverse.bold('connected!'));
     const db = client.db(databaseName);
-    db.collection('users').findOne({ name: 'Sai' }, (error, user) => {
-        if (error) {
-            log(chalk.red.bold.inverse('unable to fetch user'));
+
+    db.collection('users').updateOne({
+        _id: new ObjectID('5ef8bd32161e5c4f04cead13'),
+    }, {
+        $set: {
+            name: 'ghost:)g',
         }
-        log(user);
-    });
-    db.collection('users').find({ age: 21 }).toArray((error, users) => {
-        log(users)
+    }).then((result) => {
+        log(result)
+    }).catch((error) => {
+        // log(chalk.red.bold.inverse(error));
+        log(error)
     });
 });
