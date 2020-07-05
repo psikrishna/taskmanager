@@ -34,13 +34,27 @@ const User = mongoose.model('User', {
                 throw new Error('enail invalid');
             }
         }
+    },
+    password: {
+        type: String,
+        required: true,
+        trim: true,
+        validate(value) {
+            if (value.length < 6) {
+                throw new Error('password must have more than or equal to 6 characters');
+            }
+            if (value.toLowerCase() === 'password') {
+                throw new Error('invalid password');
+            }
+        }
     }
 });
 
 const newUser = new User({
-    name: '    test4 ',
+    name: 'test6',
     age: 21,
-    email: '  test4@email.com    ',
+    email: 'test6@email.com',
+    password: 'PaSsWoRdd',
 });
 
 newUser.save().then((newUser) => {
