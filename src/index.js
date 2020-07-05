@@ -10,6 +10,8 @@ const port = process.env.PORT || 3000;
 // automatically parse incoming json to be used as an object
 app.use(express.json());
 
+// =================== C of CRUD ===================
+
 // normally we use get to access the route using get http, but we are trying to use post for resource creation therefore we use app.post
 // call to set up resource creation endpoint (user)
 app.post('/users', (req, res) => {
@@ -30,6 +32,33 @@ app.post('/tasks', (req, res) => {
         res.status(400).send(e)
     })
 });
+
+// =================== R of CRUD ===================
+
+// route handler for fetching multiple users
+// find will get all the data, though we can use key value pair in paranthesis
+app.get('/users', (req, res) => {
+    User.find({}).then((users) => {
+        res.send(users)
+    }).catch((e) => {
+        res.status(500).send()
+    })
+});
+
+// route for returning individual users by id
+app.get('/users/:id', (req, res) => {
+    User.find()
+});
+
+// =================== U of CRUD ===================
+
+
+
+// =================== D of CRUD ===================
+
+
+
+// =================== CRUD Over ===================
 
 app.listen(port, () => {
     log('Server is up on port' + port)
