@@ -48,36 +48,41 @@ const User = mongoose.model('User', {
     }
 });
 
-const newUser = new User({
-    name: 'test6',
-    age: 21,
-    email: 'test6@email.com',
-    password: 'PaSsWoRdd',
-});
+// add user
+// const newUser = new User({
+//     name: 'test6',
+//     age: 21,
+//     email: 'test6@email.com',
+//     password: 'PaSsWoRdd',
+// });
 
-newUser.save().then((newUser) => {
-    log(newUser);
-}).catch((error) => {
-    log('Error!', error);
-});
+// newUser.save().then((newUser) => {
+//     log(newUser);
+// }).catch((error) => {
+//     log('Error!', error);
+// });
 
 // task table
 const Task = mongoose.model('Task', {
     description: {
         type: String,
+        required: true,
+        trim: true,
     },
     completed: {
         type: Boolean,
+        default: false,
     },
 });
 
-// const newTask = new Task({
-//     description: 'learn mongoose.',
-//     completed: false,
-// });
+// add task
+const newTask = new Task({
+    description: 'learn mongoose + validator',
+    completed: true,
+});
 
-// newTask.save().then((newTask) => {
-//     log(newTask);
-// }).catch((error) => {
-//     log(error);
-// });
+newTask.save().then((newTask) => {
+    log(newTask);
+}).catch((error) => {
+    log(error);
+});
