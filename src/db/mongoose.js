@@ -2,15 +2,18 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const log = console.log;
 
+// initialise connection with db
 mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
     useNewUrlParser: true,
     useCreateIndex: true,
 });
 
+// user table
 const User = mongoose.model('User', {
     name: {
         type: String,
         required: true,
+        trim: true,
     },
     age: {
         type: Number,
@@ -23,6 +26,8 @@ const User = mongoose.model('User', {
     email: {
         type: String,
         required: true,
+        trim: true,
+        lowercase: true,
         validate(value) {
             if (!validator.isEmail(value)) {
                 throw new Error('enail invalid');
@@ -43,6 +48,7 @@ newUser.save().then((newUser) => {
     log('Error!', error);
 });
 
+// task table
 const Task = mongoose.model('Task', {
     description: {
         type: String,
