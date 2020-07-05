@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const log = console.log;
 
+// user table / defines user model
 const User = mongoose.model('User', {
     name: {
         type: String,
