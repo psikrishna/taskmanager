@@ -60,6 +60,19 @@ app.get('/users/:id', (req, res) => {
     });
 });
 
+// route for returning multiple tasks
+app.get('/tasks', (req, res) => {
+    Task.find({}).then((tasks) => {
+        res.send(tasks)
+    }).catch((e) => {
+        res.status(500).send()
+    })
+});
+
+// route for returning single task accessed by id
+
+
+
 // =================== U of CRUD ===================
 
 
