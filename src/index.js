@@ -25,14 +25,15 @@ app.post('/users', async (req, res) => {
 })
 
 // call to set up resource creation endpoint (task)
-app.post('/tasks', (req, res) => {
+app.post('/tasks', async (req, res) => {
     const task = new Task(req.body)
-    task.save().then(() => {
+    try {
+        await task.save()
         res.status(201).send(task)
-    }).catch((e) => {
+    } catch (e) {
         res.status(400).send(e)
-    })
-});
+    }
+})
 
 // =================== R of CRUD ===================
 
