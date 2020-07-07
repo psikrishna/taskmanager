@@ -39,49 +39,53 @@ app.post('/tasks', async (req, res) => {
 
 // route handler for fetching multiple users
 // find will get all the data, though we can use key value pair in paranthesis
-app.get('/users', (req, res) => {
-    User.find({}).then((users) => {
+app.get('/users', async (req, res) => {
+    try {
+        const users = await User.find({})
         res.send(users)
-    }).catch((e) => {
+    } catch (e) {
         res.status(500).send()
-    })
+    }
 });
 
 // route for returning individual users by id
-app.get('/users/:id', (req, res) => {
+app.get('/users/:id', async (req, res) => {
     const _id = req.params.id
     // findOne => to be used if searching by any other value say email etc
     // findById to find by id
-    User.findById(_id).then((user) => {
+    try {
+        const user = await User.findById(_id)
         if (!user) {
             return res.status(404).send()
         }
         res.send(user)
-    }).catch((e) => {
+    } catch (e) {
         res.status(500).send()
-    });
+    }
 });
 
 // route for returning multiple tasks
-app.get('/tasks', (req, res) => {
-    Task.find({}).then((tasks) => {
+app.get('/tasks', async (req, res) => {
+    try {
+        const tasks = await Task.find({})
         res.send(tasks)
-    }).catch((e) => {
+    } catch (e) {
         res.status(500).send()
-    })
+    }
 });
 
 // route for returning single task accessed by id
-app.get('/tasks/:id', (req, res) => {
+app.get('/tasks/:id', async (req, res) => {
     const _id = req.params.id
-    Task.findById(_id).then((task) => {
+    try {
+        const task = await Task.findById(_id)
         if (!task) {
             return res.status(404).send()
         }
         res.send(task)
-    }).catch((e) => {
+    } catch (e) {
         res.status(500).send()
-    });
+    }
 });
 
 // =================== U of CRUD ===================
