@@ -46,7 +46,7 @@ app.get('/users', async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
-});
+})
 
 // route for returning individual users by id
 app.get('/users/:id', async (req, res) => {
@@ -62,7 +62,7 @@ app.get('/users/:id', async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
-});
+})
 
 // route for returning multiple tasks
 app.get('/tasks', async (req, res) => {
@@ -72,7 +72,7 @@ app.get('/tasks', async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
-});
+})
 
 // route for returning single task accessed by id
 app.get('/tasks/:id', async (req, res) => {
@@ -86,11 +86,38 @@ app.get('/tasks/:id', async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
-});
+})
 
 // =================== U of CRUD ===================
 
+// we will use app.patch here
+// route for updating users
+app.patch('/users/:id', async (req, res) => {
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['name', 'email', 'password', 'age']
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+        if (!user) {
+            return res.status(404).send()
+        }
+        res.send(user)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
 
+// route for updating tasks
+app.patch('/tasks/:id', async (req, res) => {
+    try {
+        const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+        if (!task) {
+            return res.status(404).send()
+        }
+        res.send(task)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
 
 // =================== D of CRUD ===================
 
@@ -100,4 +127,4 @@ app.get('/tasks/:id', async (req, res) => {
 
 app.listen(port, () => {
     log('Server is up on port' + port)
-});
+})
