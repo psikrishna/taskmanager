@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
         trim: true,
         lowercase: true,
         validate(value) {
@@ -42,7 +43,20 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// middleware
+// middleware for login credential check
+userSchema.statics.findByCredential = async (email, password) => {
+    const user = await User.findOne({ email })
+    if (!user) {
+        throw new Error('unable to login')
+    }
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch) {
+        throw new Error('unable to login')
+    }
+    return user
+}
+
+// middleware for password hashing
 userSchema.pre('save', async function (next) {
     const user = this
     if (user.isModified('password')) {
