@@ -15,7 +15,7 @@ router.post('/users', async (req, res) => {
     }
 })
 
-// login purposes
+// route to handle login
 router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredential(req.body.email, req.body.password)
@@ -26,7 +26,7 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
-// route to fetch user profile
+// route to fetch current user profile
 router.get('/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
