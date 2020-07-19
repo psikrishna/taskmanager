@@ -50,6 +50,13 @@ const userSchema = new mongoose.Schema({
     }],
 })
 
+// set up a virtual property to estabilish relationship between user and task(s)
+userSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'author',
+})
+
 // hide private data
 userSchema.methods.toJSON = function () {
     const user = this
