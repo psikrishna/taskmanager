@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const log = console.log;
 
 const userSchema = new mongoose.Schema({
@@ -42,6 +43,13 @@ const userSchema = new mongoose.Schema({
         }
     }
 })
+
+// token for login
+userSchema.methods.generateAuthToken = async function () {
+    const user = this
+    const token = jwt.sign({ _id: user._id.toString() }, 'ripedodolovessamandfrodo')
+    return token
+}
 
 // middleware for login credential check
 userSchema.statics.findByCredential = async (email, password) => {
