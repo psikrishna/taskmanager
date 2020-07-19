@@ -26,7 +26,7 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
-// route to fetch multiple users
+// route to fetch user profile
 router.get('/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
