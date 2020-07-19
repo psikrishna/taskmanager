@@ -3,7 +3,7 @@ const router = new express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 
-// route to create user
+// route to create user (sign-up)
 router.post('/users', async (req, res) => {
     const user = new User(req.body)
     try {
@@ -23,6 +23,30 @@ router.post('/users/login', async (req, res) => {
         res.send({ user, token })
     } catch (e) {
         res.status(400).send()
+    }
+})
+
+// route to handle user logout
+router.post('/users/logout', auth, async (req, res) => {
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+            return token.token !== req.token
+        })
+        await req.user.save()
+        res.send()
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+// route to logout of all sessions
+router.post('/users/logoutAll', auth, async (req, res) => {
+    try {
+        req.user.tokens = []
+        await req.user.save()
+        res.send()
+    } catch (e) {
+        res.status(500).send()
     }
 })
 

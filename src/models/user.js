@@ -50,6 +50,15 @@ const userSchema = new mongoose.Schema({
     }],
 })
 
+// hide private data
+userSchema.methods.toJSON = function () {
+    const user = this
+    const userObject = user.toObject()
+    delete userObject.password
+    delete userObject.tokens
+    return userObject
+}
+
 // token for login
 userSchema.methods.generateAuthToken = async function () {
     const user = this
