@@ -83,10 +83,9 @@ router.delete('/users/me', auth, async (req, res) => {
     }
 })
 
-// route to help in uploading the avatar
-
+// routes to handle user avatar
+// multer middleware
 const upload = multer({
-    dest: 'avatars',
     limits: {
         fileSize: 5000000,
     },
@@ -97,11 +96,32 @@ const upload = multer({
         cb(undefined, true)
     },
 })
-
-router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
+// route to upload user avatar (auth enabled)
+router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
+    req.user.avatar = req.file.buffer
+    await req.user.save()
     res.send()
 }, (error, req, res, next) => {
     res.status(400).send({ error: error.message })
+})
+// route to delete user avatar (auth enabled)
+router.delete('/users/me/avatar', auth, async (req, res) => {
+    req.user.avatar = undefined
+    await req.user.save()
+    res.send()
+})
+// route to fetch user avatar
+router.get('/users/:id/avatar', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+        if (!user || !user.avatar) {
+            throw new Error('')
+        }
+        res.set('Content-Type', 'image/jpg')
+        res.send(user.avatar)
+    } catch (e) {
+        res.status(404).send()
+    }
 })
 
 module.exports = router
