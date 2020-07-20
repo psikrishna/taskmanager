@@ -49,6 +49,8 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     }],
+}, {
+    timestamps: true,
 })
 
 // set up a virtual property to estabilish relationship between user and task(s)
