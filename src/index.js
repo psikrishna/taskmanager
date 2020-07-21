@@ -15,5 +15,5 @@ app.use(userRouter)
 app.use(taskRouter)
 
 app.listen(port, () => {
-    log('Server is up on port' + port)
+    log('Server is up on port: ' + port)
 })
